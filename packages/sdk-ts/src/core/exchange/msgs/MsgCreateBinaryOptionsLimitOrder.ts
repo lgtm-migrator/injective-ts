@@ -53,7 +53,7 @@ const createLimitOrder = (params: MsgCreateBinaryOptionsLimitOrder.Params) => {
   derivativeOrder.setOrderInfo(orderInfo)
   derivativeOrder.setMargin(params.margin)
 
-  derivativeOrder.setTriggerPrice(params.triggerPrice || '0')
+  derivativeOrder.setTriggerPrice(params.triggerPrice || '')
 
   const message = new BaseMsgCreateBinaryOptionsLimitOrder()
   message.setSender(params.injectiveAddress)
@@ -81,9 +81,9 @@ export default class MsgCreateBinaryOptionsLimitOrder extends MsgBase<
       ...initialParams,
       price: amountToCosmosSdkDecAmount(initialParams.price).toFixed(),
       margin: amountToCosmosSdkDecAmount(initialParams.margin).toFixed(),
-      triggerPrice: amountToCosmosSdkDecAmount(
-        initialParams.triggerPrice || 0,
-      ).toFixed(),
+      triggerPrice: initialParams.triggerPrice
+        ? amountToCosmosSdkDecAmount(initialParams.triggerPrice).toFixed()
+        : '',
       quantity: amountToCosmosSdkDecAmount(initialParams.quantity).toFixed(),
     } as MsgCreateBinaryOptionsLimitOrder.Params
 

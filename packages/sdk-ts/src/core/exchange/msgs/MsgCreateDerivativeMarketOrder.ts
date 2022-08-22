@@ -53,7 +53,7 @@ const createMarketOrder = (params: MsgCreateDerivativeMarketOrder.Params) => {
   derivativeOrder.setOrderInfo(orderInfo)
   derivativeOrder.setMargin(params.margin)
 
-  derivativeOrder.setTriggerPrice(params.triggerPrice || '0')
+  derivativeOrder.setTriggerPrice(params.triggerPrice || '')
 
   const message = new BaseMsgCreateDerivativeMarketOrder()
   message.setSender(params.injectiveAddress)
@@ -81,9 +81,9 @@ export default class MsgCreateDerivativeMarketOrder extends MsgBase<
       ...initialParams,
       price: amountToCosmosSdkDecAmount(initialParams.price).toFixed(),
       margin: amountToCosmosSdkDecAmount(initialParams.margin).toFixed(),
-      triggerPrice: amountToCosmosSdkDecAmount(
-        initialParams.triggerPrice || 0,
-      ).toFixed(),
+      triggerPrice: initialParams.triggerPrice
+        ? amountToCosmosSdkDecAmount(initialParams.triggerPrice).toFixed()
+        : '',
       quantity: amountToCosmosSdkDecAmount(initialParams.quantity).toFixed(),
     } as MsgCreateDerivativeMarketOrder.Params
 

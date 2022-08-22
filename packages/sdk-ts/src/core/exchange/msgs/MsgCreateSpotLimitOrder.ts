@@ -51,7 +51,7 @@ const createLimitOrder = (params: MsgCreateSpotLimitOrder.Params) => {
   spotOrder.setOrderType(params.orderType)
   spotOrder.setOrderInfo(orderInfo)
 
-  spotOrder.setTriggerPrice(params.triggerPrice || '0')
+  spotOrder.setTriggerPrice(params.triggerPrice || '')
 
   const message = new BaseMsgCreateSpotLimitOrder()
   message.setSender(params.injectiveAddress)
@@ -78,9 +78,9 @@ export default class MsgCreateSpotLimitOrder extends MsgBase<
     const params = {
       ...initialParams,
       price: amountToCosmosSdkDecAmount(initialParams.price).toFixed(),
-      triggerPrice: amountToCosmosSdkDecAmount(
-        initialParams.triggerPrice || 0,
-      ).toFixed(),
+      triggerPrice: initialParams.triggerPrice
+        ? amountToCosmosSdkDecAmount(initialParams.triggerPrice).toFixed()
+        : '',
       quantity: amountToCosmosSdkDecAmount(initialParams.quantity).toFixed(),
     } as MsgCreateSpotLimitOrder.Params
 
