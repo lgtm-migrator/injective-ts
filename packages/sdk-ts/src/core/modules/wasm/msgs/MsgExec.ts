@@ -133,11 +133,21 @@ export default class MsgExec extends MsgBase<
     // @ts-ignore
     delete message.deposit_funds_list
 
-    const messageWithProperKeys = snakeCaseKeys(message)
+    // const messageWithProperKeys = snakeCaseKeys(message)
+
+    const sortedMessage = {
+      sender: message.sender,
+      bank_funds: params.bankFunds,
+      deposits_subaccount_id: message.deposits_subaccount_id,
+      deposit_funds: params.subaccountDeposits,
+      contract_address: message.contract_address,
+      data: message.data,
+    }
 
     return {
       type: 'exchange/MsgExec',
-      ...messageWithProperKeys,
+      // ...messageWithProperKeys,
+      ...sortedMessage,
     } as unknown as MsgExec.Amino
   }
 
